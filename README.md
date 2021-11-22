@@ -11,6 +11,11 @@ In order to build the binary to run on the Pi, you need to execute the command `
 It will create a Docker builder image, and the build process will use that to run the compilation process inside this container.
 The result will be a file called `pi-monitor`, that should be copied to the Pi.
 
+### Running on the Pi
+
+While we don't have a way to start as a service, I am using this command to start it:
+`nohup sudo ./pi-monitor >/dev/null 2>&1 &`
+
 ### Configuration files examples:
 
 The folder `./examples` contains examples for the configurations that were used in this project.
