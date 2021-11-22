@@ -10,5 +10,5 @@ build-docker: ## Build the Docker builder image, that will be used to compile th
 
 .PHONY: build 
 build: build-docker ## Build the application binary
-	@docker run -it -v $(shell pwd):/app ${BUILDER_IMAGE} go build -o pi-monitor} .
+	@docker run -it -v $(shell pwd):/app ${BUILDER_IMAGE} go build -o pi-monitor .
 	# Binary created.
