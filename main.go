@@ -18,8 +18,9 @@ import (
 )
 
 const (
-	DEFAULT_PORT    = 8080
-	DEFAULT_INTEVAL = 5
+	DEFAULT_PORT        = 8080
+	DEFAULT_INTEVAL     = 5
+	DEFAULT_CONFIG_FILE = "/etc/pi-monitor.yml"
 )
 
 type Config struct {
@@ -90,7 +91,7 @@ func getInterval() time.Duration {
 
 func loadConfig() {
 	log.Print("Loading configuration...")
-	filename := "/etc/pi-monitor.yml"
+	filename := DEFAULT_CONFIG_FILE
 	f, err := os.Open(filename)
 	if err != nil {
 		log.Printf("Unable to load config file [%s]: %+v", filename, err)
