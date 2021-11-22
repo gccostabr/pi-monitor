@@ -5,7 +5,7 @@ It's being used to read the values from DHT22 sensors, and expose these values a
 I am using this app with a Pi Zero W, that has two sensors connected to it, to monitor the internal and external temperatures/humidities.
 
 
-### Binaty build:
+### Building the binary:
 
 In order to build the binary to run on the Pi, you need to execute the command `make build`.
 It will create a Docker builder image, and the build process will use that to run the compilation process inside this container.
@@ -25,12 +25,18 @@ The file `./example/prometheus.yml` contains the example to collect the metrics 
 
 ### Sensor Library:
 
-https://github.com/d2r2/go-dht
+In order to read the values from the sensors, the library [d2r2/go-dht](https://github.com/d2r2/go-dht). It uses a C implementation, which is important, since I am using a Pi Zero for this monitoring (Single core).
 
 ### Grafana 
 
-docker run -d --name=grafana -p 3000:3000 grafana/grafana
+In order to display the metrics on a nice dashboard, I am using Grafana. You can start it with this command:
+
+`docker run -d --name=grafana -p 3000:3000 grafana/grafana`
 
 ### Prometheus
 
-docker run --name prometheus -d -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+In order to collect the metrics and make them available to Grafana, you should run Prometheus. You can start it with this command:
+
+`docker run --name prometheus -d -p 9090:9090 -v $(pwd)/examples/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus`
+
+The above command doesn't take into consideration the data storage. It should be only used to validate the whole process.
