@@ -1,0 +1,13 @@
+port: 8081
+interval: 5
+sensor_metrics:
+  - pin: 4
+    temperature_name: internal_temperature_celcius
+    temperature_help: Current internal temperature of the Freezer.
+    humidity_name: internal_humidity
+    humidity_help: Current internal humidity of the Freezer.
+  - pin: 22
+    temperature_name: external_temperature_celcius
+    temperature_help: Current external temperature of the Freezer (Garage).
+    humidity_name: external_humidity
+    humidity_help: Current external humidity of the Freezer (Garage).
