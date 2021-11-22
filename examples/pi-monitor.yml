@@ -1,4 +1,4 @@
-port: 8081
+port: 8080
 interval: 5
 sensor_metrics:
   - pin: 4
