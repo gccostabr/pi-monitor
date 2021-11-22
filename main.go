@@ -60,6 +60,7 @@ func updateValues() {
 				if err != nil {
 					log.Printf("Unable to read sensor on pin %d: %+v", gauge.Pin, err)
 				} else {
+					log.Printf("Sensor on pin %d has the temperature %2.1fC and humidity %2.1f%%", gauge.Pin, temperature, humidity)
 					gauge.HumidityGauge.Set(float64(humidity))
 					gauge.TemperatureGauge.Set(float64(temperature))
 				}
@@ -110,16 +111,23 @@ func loadConfig() {
 func initGauges() {
 
 	for _, sensormetric := range config.SensorMetrics {
+
+		temperatureGauge := prometheus.NewGauge(prometheus.GaugeOpts{
+			Name: sensormetric.TemperatureName,
+			Help: sensormetric.TemperatureHelp,
+		})
+		prometheus.MustRegister(temperatureGauge)
+
+		humidityGauge := prometheus.NewGauge(prometheus.GaugeOpts{
+			Name: sensormetric.HumidityName,
+			Help: sensormetric.HumidityHelp,
+		})
+		prometheus.MustRegister(humidityGauge)
+
 		gauges = append(gauges, gauge{
-			Pin: sensormetric.Pin,
-			TemperatureGauge: prometheus.NewGauge(prometheus.GaugeOpts{
-				Name: sensormetric.TemperatureName,
-				Help: sensormetric.TemperatureHelp,
-			}),
-			HumidityGauge: prometheus.NewGauge(prometheus.GaugeOpts{
-				Name: sensormetric.HumidityName,
-				Help: sensormetric.HumidityHelp,
-			}),
+			Pin:              sensormetric.Pin,
+			TemperatureGauge: temperatureGauge,
+			HumidityGauge:    humidityGauge,
 		})
 	}
 
